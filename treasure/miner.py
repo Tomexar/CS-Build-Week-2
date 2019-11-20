@@ -11,7 +11,8 @@ class Miner:
         self.server_url = 'https://lambda-treasure-hunt.herokuapp.com/api/adv'
         self.api_key = 'd47e702dfe740c3824f91f1e9fea876009f589c2'
         self.auth_header = {
-            'Authorization': f"Token {self.api_key}"
+            'Authorization': f"Token {self.api_key}",
+            'Content-Type': 'application/json'
         }
         req_data = self.make_request('init')
         self.current_room = str(req_data['room_id'])
@@ -32,7 +33,7 @@ class Miner:
                              headers=self.auth_header)
         
         elif req_type == 'move':
-            move = {'direction', 'n'}
+            move = {'direction':'n'}
             r = requests.post(self.server_url + '/move/',
                               headers=self.auth_header, json = move)
             print('data: ',data_json)
@@ -48,13 +49,16 @@ class Miner:
     def explore(self):
 
         move = {"direction":"n"}
-        move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=self.auth_header, json =move)
-        print(move_response)
+        # move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=self.auth_header, json=move)
+        # print(move_response)
+        # print('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', f'headers={self.auth_header}, json={move}')
+        
+        
+        data = {'direction':'n'}
+        self.make_request('move', data)
 
-        # data = {'direction': 'n'}
-        # self.make_request('move', data)
-
-        #req_data = self.make_request('init')
+        # req_data = self.make_request('init')
+       
 
         #print(req_data)
 
